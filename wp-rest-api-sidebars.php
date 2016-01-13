@@ -23,16 +23,16 @@
  * @author    Martin Pettersson <martin_pettersson@outlook.com>
  * @copyright 2015 Martin Pettersson
  * @license   GPLv2
- * @link      https://github.com/martin-pettersson/wp-api-sidebars
+ * @link      https://github.com/martin-pettersson/wp-rest-api-sidebars
  */
 
 /**
- * Plugin Name: WP-API Sidebars
- * Plugin URI: https://github.com/martin-pettersson/wp-api-sidebars
- * Description: Exposes endpoints for widebars
+ * Plugin Name: WP REST API Sidebars
+ * Plugin URI: https://github.com/martin-pettersson/wp-rest-api-sidebars
+ * Description: An extension for the WP REST API that exposes endpoints for sidebars and widgets.
  * Author: Martin Pettersson <martin_pettersson@outlook.com>
- * Author URI: http://martindotcom.se
- * Text Domain: wp-api-sidebars
+ * Author URI: https://github.com/martin-pettersson
+ * Text Domain: wp-rest-api-sidebars
  * Domain Path: /locale
  * Version: 0.1.0
  * Network: false

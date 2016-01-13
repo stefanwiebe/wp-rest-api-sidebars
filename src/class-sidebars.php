@@ -23,7 +23,7 @@
  * @author    Martin Pettersson <martin_pettersson@outlook.com>
  * @copyright 2015 Martin Pettersson
  * @license   GPLv2
- * @link      https://github.com/martin-pettersson/wp-api-sidebars
+ * @link      https://github.com/martin-pettersson/wp-rest-api-sidebars
  */
 
 namespace WP_API_Sidebars;
