@@ -44,7 +44,7 @@ defined( 'ABSPATH' ) || die;
 
 defined( 'WP_VERSION' ) || define( 'WP_VERSION', get_bloginfo( 'version' ) );
 define( 'WP_API_SIDEBARS_REQUIRED_PHP_VERSION', '5.4.0' );
-define( 'WP_API_SIDEBARS_REQUIRED_WP_VERSION', '4.0' );
+define( 'WP_API_SIDEBARS_REQUIRED_WP_VERSION', '4.4' );
 define( 'WP_API_SIDEBARS_ROOT_DIR', dirname( __FILE__ ) );
 define( 'WP_API_SIDEBARS_ROOT_DIR_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
 define( 'WP_API_SIDEBARS_ROOT_FILE', __FILE__ );
