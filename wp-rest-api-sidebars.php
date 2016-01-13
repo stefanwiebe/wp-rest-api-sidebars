@@ -75,9 +75,6 @@ $wp_api_sidebars = WP_API_Sidebars\Sidebars::get_instance( $loader );
 
 // plug it in
 add_action( 'plugins_loaded', [ $wp_api_sidebars, 'load' ] );
-register_activation_hook( WP_REST_API_SIDEBARS_ROOT_FILE, [ $wp_api_sidebars, 'activate' ] );
-register_deactivation_hook( WP_REST_API_SIDEBARS_ROOT_FILE, [ $wp_api_sidebars, 'deactivate' ] );
-register_uninstall_hook( WP_REST_API_SIDEBARS_ROOT_FILE, [ 'WP_API_Sidebars\Sidebars', 'uninstall' ] );
 
 /**
  * Deactivates the plugin
