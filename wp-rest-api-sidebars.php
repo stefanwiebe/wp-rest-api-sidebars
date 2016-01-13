@@ -43,18 +43,18 @@
 defined( 'ABSPATH' ) || die;
 
 defined( 'WP_VERSION' ) || define( 'WP_VERSION', get_bloginfo( 'version' ) );
-define( 'WP_API_SIDEBARS_REQUIRED_PHP_VERSION', '5.4.0' );
-define( 'WP_API_SIDEBARS_REQUIRED_WP_VERSION', '4.4' );
-define( 'WP_API_SIDEBARS_ROOT_DIR', dirname( __FILE__ ) );
-define( 'WP_API_SIDEBARS_ROOT_DIR_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
-define( 'WP_API_SIDEBARS_ROOT_FILE', __FILE__ );
-define( 'WP_API_SIDEBARS_PLUGIN_BASENAME', plugin_basename( WP_API_SIDEBARS_ROOT_FILE ) );
-define( 'WP_API_SIDEBARS_VERSION', '0.1.0' );
+define( 'WP_REST_API_SIDEBARS_REQUIRED_PHP_VERSION', '5.4.0' );
+define( 'WP_REST_API_SIDEBARS_REQUIRED_WP_VERSION', '4.4' );
+define( 'WP_REST_API_SIDEBARS_ROOT_DIR', dirname( __FILE__ ) );
+define( 'WP_REST_API_SIDEBARS_ROOT_DIR_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
+define( 'WP_REST_API_SIDEBARS_ROOT_FILE', __FILE__ );
+define( 'WP_REST_API_SIDEBARS_PLUGIN_BASENAME', plugin_basename( WP_REST_API_SIDEBARS_ROOT_FILE ) );
+define( 'WP_REST_API_SIDEBARS_VERSION', '0.1.0' );
 
 // make sure we have a compatible environment
 if (
-    version_compare( PHP_VERSION, WP_API_SIDEBARS_REQUIRED_PHP_VERSION, '<' ) ||
-    version_compare( WP_VERSION, WP_API_SIDEBARS_REQUIRED_WP_VERSION, '<' )
+    version_compare( PHP_VERSION, WP_REST_API_SIDEBARS_REQUIRED_PHP_VERSION, '<' ) ||
+    version_compare( WP_VERSION, WP_REST_API_SIDEBARS_REQUIRED_WP_VERSION, '<' )
 ) {
     add_action( 'admin_notices', 'wp_api_sidebars_display_incompatible_environment_message' );
     add_action( 'admin_init', 'wp_api_sidebars_deactivate_plugin' );
@@ -64,20 +64,20 @@ if (
 
 // setup autoloader
 if ( ! class_exists( 'WP_Autoloader' ) ) {
-    require_once WP_API_SIDEBARS_ROOT_DIR . '/lib/wp-autoloader/class-wp-autoloader.php';
+    require_once WP_REST_API_SIDEBARS_ROOT_DIR . '/lib/wp-autoloader/class-wp-autoloader.php';
 }
 
 $loader = new WP_Autoloader;
-$loader->add_namespace( 'WP_API_Sidebars', WP_API_SIDEBARS_ROOT_DIR . '/src' );
+$loader->add_namespace( 'WP_API_Sidebars', WP_REST_API_SIDEBARS_ROOT_DIR . '/src' );
 $loader->register();
 
 $wp_api_sidebars = WP_API_Sidebars\Sidebars::get_instance( $loader );
 
 // plug it in
 add_action( 'plugins_loaded', [ $wp_api_sidebars, 'load' ] );
-register_activation_hook( WP_API_SIDEBARS_ROOT_FILE, [ $wp_api_sidebars, 'activate' ] );
-register_deactivation_hook( WP_API_SIDEBARS_ROOT_FILE, [ $wp_api_sidebars, 'deactivate' ] );
-register_uninstall_hook( WP_API_SIDEBARS_ROOT_FILE, [ 'WP_API_Sidebars\Sidebars', 'uninstall' ] );
+register_activation_hook( WP_REST_API_SIDEBARS_ROOT_FILE, [ $wp_api_sidebars, 'activate' ] );
+register_deactivation_hook( WP_REST_API_SIDEBARS_ROOT_FILE, [ $wp_api_sidebars, 'deactivate' ] );
+register_uninstall_hook( WP_REST_API_SIDEBARS_ROOT_FILE, [ 'WP_API_Sidebars\Sidebars', 'uninstall' ] );
 
 /**
  * Deactivates the plugin
@@ -85,7 +85,7 @@ register_uninstall_hook( WP_API_SIDEBARS_ROOT_FILE, [ 'WP_API_Sidebars\Sidebars'
  * @return null
  */
 function wp_api_sidebars_deactivate_plugin() {
-    deactivate_plugins( WP_API_SIDEBARS_PLUGIN_BASENAME );
+    deactivate_plugins( WP_REST_API_SIDEBARS_PLUGIN_BASENAME );
 }
 
 /**
@@ -94,6 +94,6 @@ function wp_api_sidebars_deactivate_plugin() {
  * @return null
  */
 function wp_api_sidebars_display_incompatible_environment_message() {
-    include WP_API_SIDEBARS_ROOT_DIR . '/templates/messages/incompatible-environment.php';
+    include WP_REST_API_SIDEBARS_ROOT_DIR . '/templates/messages/incompatible-environment.php';
 }
 
