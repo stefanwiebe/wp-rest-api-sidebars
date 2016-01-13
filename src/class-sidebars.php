@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Short description...
+ * An extension for the WP REST API that exposes endpoints for sidebars and widgets.
  *
  * PHP version 5.4.0
  *
