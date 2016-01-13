@@ -25,7 +25,7 @@ note: to enable you to use any version/branch of the [WP REST API][] plugin duri
         "after_widget": "<\/aside>",
         "before_title": "<h1 class=\"widget-title\">",
         "after_title": "<\/h1>"
-    }, ...
+    }
 ]
 ```
 
