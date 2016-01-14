@@ -19,7 +19,7 @@ An extension for the WP REST API that exposes endpoints for sidebars and widgets
 
 = Currently supported endpoints =
 
-**/wp-json/wp/v2/sidebars** *returns a list of registered sidebars*
+**/wp-json/wp-rest-api-sidebars/v1/sidebars** *returns a list of registered sidebars*
 
 <pre><code>
 [
@@ -36,7 +36,7 @@ An extension for the WP REST API that exposes endpoints for sidebars and widgets
 ]
 </code></pre>
 
-**/wp-json/wp/v2/sidebars/{id}** *returns the given sidebar*
+**/wp-json/wp-rest-api-sidebars/v1/sidebars/{id}** *returns the given sidebar*
 
 <pre><code>
 {
