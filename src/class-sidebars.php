@@ -96,32 +96,5 @@ final class Sidebars {
             $sidebars_controller->register_routes();
         } );
     }
-
-    /**
-     * Runs the plugins activation routine
-     *
-     * @return null
-     */
-    public function activate() {
-        // ...
-    }
-
-    /**
-     * Runs the plugins deactivation routine
-     *
-     * @return null
-     */
-    public function deactivate() {
-        // ...
-    }
-
-    /**
-     * Runs the plugins uninstall routine
-     *
-     * @return null
-     */
-    public static function uninstall() {
-        // ...
-    }
 }
 
