@@ -172,19 +172,5 @@ class Sidebars_Controller extends WP_REST_Controller {
 
         return null;
     }
-/*
-
-    public function create_item( WP_REST_Request $request ) {
-        // ...
-    }
-
-    public function update_item( WP_REST_Request $request ) {
-        // ...
-    }
-
-    public function delete_item( WP_REST_Request $request ) {
-        // ...
-    }
- */
 }
 

@@ -1,6 +1,19 @@
 <?php
 
 /**
+ * Plugin Name: WP REST API Sidebars
+ * Plugin URI: https://github.com/martin-pettersson/wp-rest-api-sidebars
+ * Description: An extension for the WP REST API that exposes endpoints for sidebars and widgets.
+ * Author: Martin Pettersson <martin_pettersson@outlook.com>
+ * Author URI: https://github.com/martin-pettersson
+ * Text Domain: wp-rest-api-sidebars
+ * Domain Path: /locale
+ * Version: 0.1.0
+ * Network: false
+ * License: GPLv2
+ */
+
+/**
  * An extension for the WP REST API that exposes endpoints for sidebars and widgets.
  *
  * PHP version 5.4.0
@@ -26,19 +39,6 @@
  * @link      https://github.com/martin-pettersson/wp-rest-api-sidebars
  */
 
-/**
- * Plugin Name: WP REST API Sidebars
- * Plugin URI: https://github.com/martin-pettersson/wp-rest-api-sidebars
- * Description: An extension for the WP REST API that exposes endpoints for sidebars and widgets.
- * Author: Martin Pettersson <martin_pettersson@outlook.com>
- * Author URI: https://github.com/martin-pettersson
- * Text Domain: wp-rest-api-sidebars
- * Domain Path: /locale
- * Version: 0.1.0
- * Network: false
- * License: GPLv2
- */
-
 // exit if accessed directly
 defined( 'ABSPATH' ) || die;
 
@@ -56,8 +56,8 @@ if (
     version_compare( PHP_VERSION, WP_REST_API_SIDEBARS_REQUIRED_PHP_VERSION, '<' ) ||
     version_compare( WP_VERSION, WP_REST_API_SIDEBARS_REQUIRED_WP_VERSION, '<' )
 ) {
-    add_action( 'admin_notices', 'wp_api_sidebars_display_incompatible_environment_message' );
-    add_action( 'admin_init', 'wp_api_sidebars_deactivate_plugin' );
+    add_action( 'admin_notices', 'wp_rest_api_sidebars_display_incompatible_environment_message' );
+    add_action( 'admin_init', 'wp_rest_api_sidebars_deactivate_plugin' );
 
     return;
 }
@@ -71,17 +71,17 @@ $loader = new WP_Autoloader;
 $loader->add_namespace( 'WP_API_Sidebars', WP_REST_API_SIDEBARS_ROOT_DIR . '/src' );
 $loader->register();
 
-$wp_api_sidebars = WP_API_Sidebars\Sidebars::get_instance( $loader );
+$wp_rest_api_sidebars = WP_API_Sidebars\Sidebars::get_instance( $loader );
 
 // plug it in
-add_action( 'plugins_loaded', [ $wp_api_sidebars, 'load' ] );
+add_action( 'plugins_loaded', [ $wp_rest_api_sidebars, 'load' ] );
 
 /**
  * Deactivates the plugin
  *
  * @return null
  */
-function wp_api_sidebars_deactivate_plugin() {
+function wp_rest_api_sidebars_deactivate_plugin() {
     deactivate_plugins( WP_REST_API_SIDEBARS_PLUGIN_BASENAME );
 }
 
@@ -90,7 +90,7 @@ function wp_api_sidebars_deactivate_plugin() {
  *
  * @return null
  */
-function wp_api_sidebars_display_incompatible_environment_message() {
+function wp_rest_api_sidebars_display_incompatible_environment_message() {
     include WP_REST_API_SIDEBARS_ROOT_DIR . '/templates/messages/incompatible-environment.php';
 }
 
