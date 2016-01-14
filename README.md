@@ -5,11 +5,12 @@ An extension for the WP REST API that exposes endpoints for sidebars and widgets
 
 ## Installation
 
-Get the content to the plugin directory and activate the plugin
+Install directly from within wp-admin. Or get the files from either this repo or from the official [WP REST API Sidebars][] plugin to the plugin directory and activate the plugin.
 
 note: to enable you to use any version/branch of the [WP REST API][] plugin during this rapid development phase there is currently no good way to check if it is active. Therefore make sure that it is before you activate this plugin.
 
 [WP REST API]: https://wordpress.org/plugins/rest-api
+[WP REST API Sidebars]: https://wordpress.org/plugins/wp-rest-api-sidebars
 
 ## Currently supported endpoints
 **/wp-json/wp/v2/sidebars** *returns a list of registered sidebars*
