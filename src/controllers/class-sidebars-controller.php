@@ -51,8 +51,6 @@ class Sidebars_Controller extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => [ $this, 'get_items' ],
-                'permission_callback' => [ $this, 'get_items_auth' ],
-                'args'                => [],
             ],
         ] );
 
@@ -60,12 +58,11 @@ class Sidebars_Controller extends WP_REST_Controller {
             [
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => [ $this, 'get_item' ],
-                'permission_callback' => [ $this, 'get_item_auth' ],
                 'args'                => [
                     'id' => [
-                        'description' => 'A sidebar id',
+                        'description' => 'The id of a registered sidebar',
                         'type' => 'string',
-                        'validate_callback' => function( $sidebar_id ) {
+                        'validate_callback' => function ( $sidebar_id ) {
                             return ! is_null( $this->get_sidebar( $sidebar_id ) );
                         }
                     ],
@@ -99,22 +96,6 @@ class Sidebars_Controller extends WP_REST_Controller {
     }
 
     /**
-     * Validates the user to the route
-     *
-     * @param WP_REST_Request $request
-     *
-     * @return WP_Error|bool
-     */
-    public function get_items_auth( $request ) {
-        // do type checking here as the method declaration must be compatible with parent
-        if ( ! $request instanceof WP_REST_Request ) {
-            throw new InvalidArgumentException( __METHOD__ . ' expects an instance of WP_REST_Request' );
-        }
-
-        return true;
-    }
-
-    /**
      * Returns the given sidebar
      *
      * @param WP_REST_Request $request
@@ -136,22 +117,6 @@ class Sidebars_Controller extends WP_REST_Controller {
         $sidebar['rendered'] = ob_get_clean();
 
         return new WP_REST_Response( $sidebar, 200 );
-    }
-
-    /**
-     * Validates the user to the route
-     *
-     * @param WP_REST_Request $request
-     *
-     * @return WP_Error|bool
-     */
-    public function get_item_auth( $request ) {
-        // do type checking here as the method declaration must be compatible with parent
-        if ( ! $request instanceof WP_REST_Request ) {
-            throw new InvalidArgumentException( __METHOD__ . ' expects an instance of WP_REST_Request' );
-        }
-
-        return true;
     }
 
     /**
