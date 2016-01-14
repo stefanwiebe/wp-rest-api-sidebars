@@ -12,7 +12,8 @@ An extension for the WP REST API that exposes endpoints for sidebars and widgets
 
 == Description ==
 
-*note: this plugin is under heavy development and will receive frequent feature updates (including documentation) so stay tuned*
+*note: this plugin is under heavy development and will receive frequent feature updates (including documentation) so stay tuned and checkout the [github][] repo for the latest updates*
+[github]: https://github.com/martin-pettersson/wp-rest-api-sidebars
 
 = Currently supported endpoints =
 
