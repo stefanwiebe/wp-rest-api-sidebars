@@ -47,14 +47,14 @@ class Sidebars_Controller extends WP_REST_Controller {
      * @return null
      */
     public function register_routes() {
-        register_rest_route( 'wp/v2', '/sidebars', [
+        register_rest_route( 'wp-rest-api-sidebars/v1', '/sidebars', [
             [
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => [ $this, 'get_items' ],
             ],
         ] );
 
-        register_rest_route( 'wp/v2', '/sidebars/(?P<id>[\w-]+)', [
+        register_rest_route( 'wp-rest-api-sidebars/v1', '/sidebars/(?P<id>[\w-]+)', [
             [
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => [ $this, 'get_item' ],

@@ -8,7 +8,7 @@
  * Author URI: https://github.com/martin-pettersson
  * Text Domain: wp-rest-api-sidebars
  * Domain Path: /locale
- * Version: 0.1.0
+ * Version: 0.1.1
  * Network: false
  * License: GPLv2
  */
@@ -49,7 +49,7 @@ define( 'WP_REST_API_SIDEBARS_ROOT_DIR', dirname( __FILE__ ) );
 define( 'WP_REST_API_SIDEBARS_ROOT_DIR_URL', rtrim( plugin_dir_url( __FILE__ ), '/' ) );
 define( 'WP_REST_API_SIDEBARS_ROOT_FILE', __FILE__ );
 define( 'WP_REST_API_SIDEBARS_PLUGIN_BASENAME', plugin_basename( WP_REST_API_SIDEBARS_ROOT_FILE ) );
-define( 'WP_REST_API_SIDEBARS_VERSION', '0.1.0' );
+define( 'WP_REST_API_SIDEBARS_VERSION', '0.1.1' );
 
 // make sure we have a compatible environment
 if (

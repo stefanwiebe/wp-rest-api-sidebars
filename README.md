@@ -13,7 +13,7 @@ note: to enable you to use any version/branch of the [WP REST API][] plugin duri
 [WP REST API Sidebars]: https://wordpress.org/plugins/wp-rest-api-sidebars
 
 ## Currently supported endpoints
-**/wp-json/wp/v2/sidebars** *returns a list of registered sidebars*
+**/wp-json/wp-rest-api-sidebars/v1/sidebars** *returns a list of registered sidebars*
 
 ```json
 [
@@ -30,7 +30,7 @@ note: to enable you to use any version/branch of the [WP REST API][] plugin duri
 ]
 ```
 
-**/wp-json/wp/v2/sidebars/{id}** *returns the given sidebar*
+**/wp-json/wp-rest-api-sidebars/v1/sidebars/{id}** *returns the given sidebar*
 
 ```json
 {
@@ -42,6 +42,15 @@ note: to enable you to use any version/branch of the [WP REST API][] plugin duri
     "after_widget": "<\/aside>",
     "before_title": "<h1 class=\"widget-title\">",
     "after_title": "<\/h1>",
-    "rendered": "<aside id=\"widget-id-1\" class=\"widget widget_widget-id\">..."
+    "rendered": "<aside id=\"widget-id-1\" class=\"widget widget_widget-id\">...",
+    "widgets": [
+        {
+            "name": "Widget Name",
+            "id": "widget-name-1",
+            "classname": "widget_widget_name",
+            "description": "Widget description",
+            "rendered": "<aside id=\"widget-names-1\" class=\"widget widget_widget_name\">..."
+        }
+    ]
 }
 ```
