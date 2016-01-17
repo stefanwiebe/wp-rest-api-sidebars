@@ -185,10 +185,10 @@ class Sidebars_Controller extends WP_REST_Controller {
         global $wp_registered_widgets, $wp_registered_sidebars;
 
         $widgets = [];
-        $sidebars_widgets = wp_get_sidebars_widgets();
+        $sidebars_widgets = (array) wp_get_sidebars_widgets();
 
         if ( isset( $wp_registered_sidebars[ $sidebar_id ] ) && isset( $sidebars_widgets[ $sidebar_id ] ) ) {
-            foreach ( (array) $sidebars_widgets[ $sidebar_id ] as $widget_id ) {
+            foreach ( $sidebars_widgets[ $sidebar_id ] as $widget_id ) {
                 // just to be sure
                 if ( isset( $wp_registered_widgets[ $widget_id ] ) ) {
                     $widget = $wp_registered_widgets[ $widget_id ];
