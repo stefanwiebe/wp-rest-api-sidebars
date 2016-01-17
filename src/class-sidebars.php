@@ -96,7 +96,7 @@ final class Sidebars {
      * @return null
      */
     public function load() {
-        add_action( 'rest_api_init', function() {
+        add_action( 'rest_api_init', function () {
             $sidebars_controller = new Controllers\Sidebars_Controller;
 
             // register controller routes
