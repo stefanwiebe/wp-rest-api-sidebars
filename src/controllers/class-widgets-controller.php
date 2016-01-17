@@ -60,6 +60,8 @@ class Widgets_Controller extends WP_REST_Controller {
     /**
      * Returns a list of registered widgets
      *
+     * @global array $wp_registered_widgets
+     *
      * @param WP_REST_Request $request
      *
      * @return WP_REST_Response
