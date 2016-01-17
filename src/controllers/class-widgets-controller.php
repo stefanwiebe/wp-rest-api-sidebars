@@ -49,10 +49,64 @@ class Widgets_Controller extends WP_REST_Controller {
      * @return null
      */
     public function register_routes() {
+        // lists all widgets
         register_rest_route( Sidebars::ENDPOINT_NAMESPACE, '/widgets', [
             [
                 'methods'  => WP_REST_Server::READABLE,
                 'callback' => [ $this, 'get_items' ],
+            ],
+        ] );
+
+        // lists a single widget based on the base id
+        register_rest_route( Sidebars::ENDPOINT_NAMESPACE, '/widgets/(?P<id_base>[\w-]+)', [
+            [
+                'methods' => WP_REST_Server::READABLE,
+                'callback' => [ $this, 'get_item' ],
+                'args' => [
+                    'id_base' => [
+                        'description' => 'The base id of a registered widget',
+                        'type' => 'string',
+                        'validate_callback' => function ( $id_base ) {
+                            return ! is_null( self::get_widget( $id_base ) );
+                        },
+                    ],
+                ],
+            ],
+            [
+                'methods' => WP_REST_Server::CREATABLE,
+                'callback' => [ $this, 'create_item' ],
+                'args' => [
+                    'sidebar' => [
+                        'description' => 'The id of the sidebar to add the widget to',
+                        'type' => 'string',
+                        'validate_callback' => function ( $sidebar_id ) {
+                            return ! is_null( Sidebars_Controller::get_sidebar( $sidebar_id ) );
+                        },
+                    ],
+                ],
+            ],
+        ] );
+
+        register_rest_route( Sidebars::ENDPOINT_NAMESPACE, '/widgets/(?P<id_base>[\w-]+)/(?P<instance_id>[\w-]+)', [
+            [
+                'methods' => WP_REST_Server::READABLE,
+                'callback' => [ $this, 'get_item_instance' ],
+                'args' => [
+                    'id_base' => [
+                        'description' => 'The base id of a registered widget',
+                        'type' => 'string',
+                        'validate_callback' => function ( $id_base ) {
+                            return ! is_null( self::get_widget( $id_base ) );
+                        },
+                    ],
+                    'instance_id' => [
+                        'description' => 'The instance id of a widget',
+                        'type' => 'string',
+                        'validate_callback' => function ( $instance_id ) {
+                            return ! is_null( self::get_widget_instance( $instance_id ) );
+                        },
+                    ],
+                ],
             ],
         ] );
     }
@@ -119,7 +173,7 @@ class Widgets_Controller extends WP_REST_Controller {
     }
 
     /**
-     * Returns the given sidebar
+     * Returns a widget based on the given id
      *
      * @param WP_REST_Request $request
      *
@@ -131,7 +185,102 @@ class Widgets_Controller extends WP_REST_Controller {
             throw new InvalidArgumentException( __METHOD__ . ' expects an instance of WP_REST_Request' );
         }
 
-        // ...
+        $widget = self::get_widget( $request->get_param( 'id_base' ) );
+
+        return new WP_REST_Response( $widget, 200 );
+    }
+
+    /**
+     * Returns a widget instance based on the given id
+     *
+     * @param WP_REST_Request $request
+     *
+     * @return WP_REST_Response
+     */
+    public function get_item_instance( $request ) {
+        // do type checking here as the method declaration must be compatible with parent
+        if ( ! $request instanceof WP_REST_Request ) {
+            throw new InvalidArgumentException( __METHOD__ . ' expects an instance of WP_REST_Request' );
+        }
+
+        $widget_instance = self::get_widget_instance( $request->get_param( 'instance_id' ) );
+
+        return new WP_REST_Response( $widget_instance, 200 );
+    }
+
+    /**
+     * Returns a widget based on the given id base or null if not found
+     *
+     * @global array $wp_registered_widgets
+     *
+     * @param string $id_base
+     *
+     * @return WP_Widget|null
+     */
+    public static function get_widget( $id_base ) {
+        global $wp_registered_widgets;
+
+        foreach ( (array) $wp_registered_widgets as $id => $widget ) {
+            if ( isset( $widget['callback'][0] ) && $widget['callback'][0] instanceof WP_Widget ) {
+                $widget_instance = $widget['callback'][0];
+
+                if ( $widget_instance->id_base === $id_base ) {
+                    $widget['name'] = $widget_instance->name;
+                    $widget['id_base'] = $widget_instance->id_base;
+                    $widget['option_name'] = $widget_instance->option_name;
+                    $widget['instances'] = 0;
+                    $widget['sidebars'] = [];
+
+                    // list the sidebars this widget has instances in, and the instance id's
+                    foreach ( (array) wp_get_sidebars_widgets() as $sidebar_id => $sidebar_widgets ) {
+                        foreach ( $sidebar_widgets as $widget_id ) {
+                            if ( preg_match( "/({$widget['id_base']}-\d)/", $widget_id, $match ) ) {
+                                if ( ! isset( $widget['sidebars'][ $sidebar_id ] ) ) {
+                                    $widget['sidebars'][ $sidebar_id ] = [];
+                                }
+
+                                ++$widget['instances'];
+                                $widget['sidebars'][ $sidebar_id ][] = $widget_id;
+                            }
+                        }
+                    }
+
+                    unset( $widget['id'] );
+                    unset( $widget['params'] );
+                    unset( $widget['callback'] );
+
+                    return $widget;
+                }
+            }
+        }
+
+        return null;
+    }
+
+    /**
+     * Returns a widget instance based on the given id or null if not found
+     *
+     * @global array $wp_registered_widgets
+     *
+     * @param string $instance_id
+     *
+     * @return WP_Widget|null
+     */
+    public static function get_widget_instance( $instance_id ) {
+        global $wp_registered_widgets;
+
+        foreach ( (array) $wp_registered_widgets as $id => $widget ) {
+            if (
+                $instance_id === $id &&
+                isset( $widget['callback'][0] ) &&
+                $widget['callback'][0] instanceof WP_Widget
+            ) {
+                // @todo: format the widget object
+                return $widget['callback'][0];
+            }
+        }
+
+        return null;
     }
 }
 
