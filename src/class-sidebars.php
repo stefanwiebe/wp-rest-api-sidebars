@@ -37,6 +37,13 @@ use WP_Autoloader;
  */
 final class Sidebars {
     /**
+     * The API endpoint namespace
+     *
+     * @var string
+     */
+    const ENDPOINT_NAMESPACE = 'wp-rest-api-sidebars/v1';
+
+    /**
      * The plugins autoloader
      *
      * @var WP_Autoloader

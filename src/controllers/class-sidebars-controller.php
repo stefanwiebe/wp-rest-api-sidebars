@@ -34,6 +34,7 @@ use WP_REST_Server;
 use WP_REST_Request;
 use WP_REST_Response;
 use WP_Error;
+use WP_API_Sidebars\Sidebars;
 
 /**
  * Class Sidebars_Controller
@@ -47,14 +48,16 @@ class Sidebars_Controller extends WP_REST_Controller {
      * @return null
      */
     public function register_routes() {
-        register_rest_route( 'wp-rest-api-sidebars/v1', '/sidebars', [
+        // lists all sidebars
+        register_rest_route( Sidebars::ENDPOINT_NAMESPACE, '/sidebars', [
             [
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => [ $this, 'get_items' ],
             ],
         ] );
 
-        register_rest_route( 'wp-rest-api-sidebars/v1', '/sidebars/(?P<id>[\w-]+)', [
+        // lists a single sidebar based on the given id
+        register_rest_route( Sidebars::ENDPOINT_NAMESPACE, '/sidebars/(?P<id>[\w-]+)', [
             [
                 'methods'             => WP_REST_Server::READABLE,
                 'callback'            => [ $this, 'get_item' ],
