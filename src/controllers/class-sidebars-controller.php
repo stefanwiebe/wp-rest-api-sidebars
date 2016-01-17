@@ -65,8 +65,8 @@ class Sidebars_Controller extends WP_REST_Controller {
                     'id' => [
                         'description' => 'The id of a registered sidebar',
                         'type' => 'string',
-                        'validate_callback' => function ( $sidebar_id ) {
-                            return ! is_null( self::get_sidebar( $sidebar_id ) );
+                        'validate_callback' => function ( $id ) {
+                            return ! is_null( self::get_sidebar( $id ) );
                         }
                     ],
                 ],
@@ -75,7 +75,9 @@ class Sidebars_Controller extends WP_REST_Controller {
     }
 
     /**
-     * Returns a list of registered sidebars
+     * Returns a list of sidebars (active or inactive)
+     *
+     * @global array $wp_registered_sidebars
      *
      * @param WP_REST_Request $request
      *
@@ -91,7 +93,19 @@ class Sidebars_Controller extends WP_REST_Controller {
 
         $sidebars = [];
 
-        foreach ( (array) $wp_registered_sidebars as $slug => $sidebar ) {
+        foreach ( (array) wp_get_sidebars_widgets() as $id => $widgets ) {
+            $sidebar = compact( 'id', 'widgets' );
+
+            if ( isset( $wp_registered_sidebars[ $id ] ) ) {
+                $registered_sidebar = $wp_registered_sidebars[ $id ];
+
+                $sidebar['status'] = 'active';
+                $sidebar['name'] = $registered_sidebar['name'];
+                $sidebar['description'] = $registered_sidebar['description'];
+            } else {
+                $sidebar['status'] = 'inactive';
+            }
+
             $sidebars[] = $sidebar;
         }
 
@@ -111,20 +125,21 @@ class Sidebars_Controller extends WP_REST_Controller {
             throw new InvalidArgumentException( __METHOD__ . ' expects an instance of WP_REST_Request' );
         }
 
-        $sidebar = $this->get_sidebar( $request->get_param( 'id' ) );
+        $sidebar = self::get_sidebar( $request->get_param( 'id' ) );
+
+        $sidebar['widgets'] = self::get_widgets( $sidebar['id'] );
 
         ob_start();
-
         dynamic_sidebar( $request->get_param( 'id' ) );
-
         $sidebar['rendered'] = ob_get_clean();
-        $sidebar['widgets'] = self::get_widgets( $sidebar['id'] );
 
         return new WP_REST_Response( $sidebar, 200 );
     }
 
     /**
-     * Returns the given sidebar or false if not found
+     * Returns a sidebar for the given id or null if not found
+     *
+     * Note: The id can be either an index, the id or the name of a sidebar
      *
      * @global array $wp_registered_sidebars
      *
@@ -157,7 +172,7 @@ class Sidebars_Controller extends WP_REST_Controller {
     }
 
     /**
-     * Returns the given sidebars widgets
+     * Returns a list of widgets for the given sidebar id
      *
      * @global array $wp_registered_widgets
      * @global array $wp_registered_sidebars
