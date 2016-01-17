@@ -97,10 +97,13 @@ final class Sidebars {
      */
     public function load() {
         add_action( 'rest_api_init', function () {
+            // instantiate controllers
             $sidebars_controller = new Controllers\Sidebars_Controller;
+            $widgets_controller = new Controllers\Widgets_Controller;
 
             // register controller routes
             $sidebars_controller->register_routes();
+            $widgets_controller->register_routes();
         } );
     }
 }
