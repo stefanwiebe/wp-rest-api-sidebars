@@ -41,7 +41,7 @@ final class Sidebars {
      *
      * @var string
      */
-    const ENDPOINT_NAMESPACE = 'wp-rest-api-sidebars/v1';
+    const ENDPOINT_NAMESPACE = 'wp-rest-api-sidebars/v2';
 
     /**
      * The plugins autoloader
